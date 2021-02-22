@@ -1,15 +1,29 @@
 #imageArray {
   width: 100%;
   height: auto;
+  margin: 20px;
+  padding: 20px;
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
 
 .image {
   padding: 0 10px 0 10px;
-  width: 200px;
-  height: 200px;
+  width: 210px;
+  height: 210px;
 }
+
+
+.image img:hover {
+  width: 210px;
+  height: 210px;
+  filter: brightness(120%);
+  box-shadow: 0px 0px 15px gray;
+  transition-property: width, height, filter, box-shadow;
+  transition-duration: 0.1s;
+}
+
 
 .image img {
   border-radius: 10px;

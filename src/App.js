@@ -1,4 +1,5 @@
 import {useEffect, useCallback, useState} from "react"
+import {shuffleArray} from "./utils/shuffle.js"
 import './App.css';
 
 const DOGS_PER_LEVEL = 5;
@@ -8,34 +9,10 @@ const API_ACCESS_TOKEN = "wdlcyHspKR9Mmp8P1BX45zKfYtV6COQLH0nYwxYGHfU"
 
 function App() {
 
-  const [dogs, setDogs] = useState([])
+  const [dogs, setDogs] = useState([]);
+  const [originalIndex, setOriginalIndex] = useState([]);
   const [level, setLevel] = useState(1)
 
-  const shuffleArray = function(arrayToShuffle) {
-    let shuffledArray = new Array(arrayToShuffle.length)
-
-    let originalOrder = new Array(arrayToShuffle.length)
-    let shuffleOrder = new Array(arrayToShuffle.length)
-    
-    for (let i = 0; i < arrayToShuffle.length; i++) {
-      originalOrder[i] = i;
-    }
-
-    for(let i = 0; i < arrayToShuffle.length; i++) {
-      let randomNumber = 0;
-
-      do {
-        randomNumber = Math.floor(Math.random() * Math.floor(arrayToShuffle.length))
-      } while (randomNumber in shuffleOrder)
-
-      shuffledArray.append(randomNumber) 
-      console.log(shuffleArray) 
-    }
-    
-    // shuffle array
-    
-    return shuffleArray
-  }
   
   const getDogs = useCallback(async () => {
       const result = await fetch(`${API_LOCATION}${API_QUERY}${level * DOGS_PER_LEVEL}`, {mode: "cors", headers: {Authorization: `Client-ID ${API_ACCESS_TOKEN}`}}).catch(error => console.error(error))
@@ -54,13 +31,29 @@ function App() {
     getDogs()
   }, [getDogs])
 
+  useEffect(() => {
+    setOriginalIndex([...dogs])
+    console.log(originalIndex)
+  }, [dogs])
+
+  const shuffleDogs = () => {
+    setDogs(shuffleArray(dogs))
+  }
+
+  function compareDogs(dog1, dog2) {  
+    return dog1.position === dog2 ? "yay" : "nay"
+  }
+
 
   return (
     <div className="App">
       <h2>Dogs!</h2>
       {dogs.length === 0 && <p>Loading dogs...</p>}
-      <div id="imageArray">{dogs.map((dog, dogIndex) => <div className="image" key={dogIndex}><img src={dog.url} alt="dog"/></div>)}</div>
+      <div id="imageArray">{dogs.map((dog, dogIndex) => <div className="image" key={dogIndex} onClick={() =>
+        console.log(originalIndex.findIndex(dogo => dogo.position === dog.position))
+        }><img src={dog.url} alt="dog"/></div>)}</div>
     <button onClick={() => getDogs()}>More Dogs!</button>
+    <button onClick={() => shuffleDogs()}>Shuffle Dogs!</button>
     </div>
   );
 }
