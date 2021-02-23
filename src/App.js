@@ -10,7 +10,7 @@ const API_ACCESS_TOKEN = "wdlcyHspKR9Mmp8P1BX45zKfYtV6COQLH0nYwxYGHfU"
 function App() {
 
   const [dogs, setDogs] = useState([]);
-  const [originalIndex, setOriginalIndex] = useState([]);
+  const [currentPosition, setCurrentPosition] = useState(0) 
   const [level, setLevel] = useState(1)
 
   
@@ -21,8 +21,7 @@ function App() {
       if(!resultJson) {
         return
       }
-
-      console.log(resultJson)
+      
       setDogs(resultJson.map((image, index) => {return {position: index, url: image.urls.thumb}}))
       
 }, [level])
@@ -31,17 +30,13 @@ function App() {
     getDogs()
   }, [getDogs])
 
-  useEffect(() => {
-    setOriginalIndex([...dogs])
-    console.log(originalIndex)
-  }, [dogs])
-
   const shuffleDogs = () => {
     setDogs(shuffleArray(dogs))
   }
 
-  function compareDogs(dog1, dog2) {  
-    return dog1.position === dog2 ? "yay" : "nay"
+  function comparePositions(pos1, pos2) {  
+    console.log(pos1 + " " + pos2)
+    return pos1 === pos2 ? "yay" : "nay"
   }
 
 
@@ -49,9 +44,11 @@ function App() {
     <div className="App">
       <h2>Dogs!</h2>
       {dogs.length === 0 && <p>Loading dogs...</p>}
-      <div id="imageArray">{dogs.map((dog, dogIndex) => <div className="image" key={dogIndex} onClick={() =>
-        console.log(originalIndex.findIndex(dogo => dogo.position === dog.position))
-        }><img src={dog.url} alt="dog"/></div>)}</div>
+      <div id="imageArray">{dogs.map((dog, dogIndex) => <div className="image" key={dogIndex} onClick={() =>{
+        console.log(comparePositions(currentPosition, dog.position))
+        setCurrentPosition(currentPosition + 1)
+        shuffleDogs()
+        }}><img src={dog.url} alt="dog"/></div>)}</div>
     <button onClick={() => getDogs()}>More Dogs!</button>
     <button onClick={() => shuffleDogs()}>Shuffle Dogs!</button>
     </div>
