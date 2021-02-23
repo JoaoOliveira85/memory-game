@@ -1,33 +1,100 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&family=Underdog&display=swap');
+:root {
+  font-size: 10px;
+}
+
+h1 {
+  text-align: center;
+  font-size: 4rem;
+  font-family: 'Underdog', cursive;
+}
+
+h2 {
+  font-size: 3rem;
+  font-family: 'Underdog', cursive;
+}
+
+p {
+  font-size: 1rem;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+body {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  cursor: url("./assets/cursor.png"), default;
+  background-image: url("./assets/background.jpg");
+  background-size: cover;
+}
+
+.App {
+  margin: 1rem;
+}
+
 #imageArray {
-  width: 100%;
-  height: auto;
-  margin: 20px;
-  padding: 20px;
-  display: flex;
-  flex-direction: row;
+  margin: 2rem;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
   align-items: center;
 }
 
-.image {
-  padding: 0 10px 0 10px;
-  width: 210px;
-  height: 210px;
-}
-
-
 .image img:hover {
-  width: 210px;
-  height: 210px;
+  transform: scale(1.05);
   filter: brightness(120%);
-  box-shadow: 0px 0px 15px gray;
-  transition-property: width, height, filter, box-shadow;
+  box-shadow: 0rem 0rem 1.5rem gray;
+  transition-property: transform, filter, box-shadow;
   transition-duration: 0.1s;
+  transition-timing-function: ease-in;
+  transform-origin: center;
 }
 
 
 .image img {
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px lightgrey;
-  width: 200px;
-  height: 200px;
+  border: 0.5rem solid white;
+  border-radius: 1rem;
+  box-shadow: 0rem 0rem 1rem lightgrey;
+  width: 15rem;
+  height: 15rem;
+  transition-property: transform, filter, box-shadow;
+  transition-duration: 0.1s;
+  transition-timing-function: ease-in;
+  transform-origin: center;
+}
+
+#imageContaier {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+#gameoverContainer {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0);
+  z-index: 9998;
+}
+
+#gameOverScreen {
+  text-align: center;
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 0.5rem solid gray;
+  border-radius: 1rem;
+  box-shadow: 0rem 0rem 1rem black;
+  backdrop-filter: blur(0.5rem);
+  width: 50vw;
+  height: 60vh;
+  top: 20vh;
+  left: 25vw;
+  z-index: 9999;
+}
+
+#gameoverDog {
+  width: 30rem;
+  margin: 1rem 0 0 0;
+  box-shadow: 0rem 0rem 1rem lightgrey;
 }
